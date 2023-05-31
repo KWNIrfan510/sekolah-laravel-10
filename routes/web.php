@@ -26,5 +26,8 @@ Route::prefix('admin')->group(function () {
     Route::group(['middleware' => 'auth'], function() {
         // Dashboard
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard.index');
+        
+        // Permissions
+        Route::resource('/permission', App\Http\Controllers\Admin\PermissionController::class, ['except' => ['show','create','edit','update','delete'], 'as' => 'Admin']);
     });
 });
