@@ -55,9 +55,9 @@
                                             </a>
                                         @endcan
                                         @can('roles.delete')
-                                            <button onclick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $role->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $role->id }}">
                                                 <i class="fa fa-trash"></i>
-                                            </button>    
+                                            </button>   
                                         @endcan
                                     </td>
                                 </tr>
@@ -92,7 +92,7 @@
             if(isConfirm) {
                 // Ajax Delete
                 jQuery.ajax({
-                    url: "/admin/role"+id,
+                    url: "/admin/role/"+id,
                     data: {
                         "id": id,
                         "_token": token
@@ -108,7 +108,7 @@
                                 showConfirmButton: false,
                                 showCancelButton: false,
                                 buttons: false,
-                            })then(function() {
+                            }).then(function() {
                                 location.reload();
                             });
                         } else {
@@ -120,7 +120,7 @@
                                 showConfirmButton: false,
                                 showCancelButton: false,
                                 buttons: false,
-                            })then(function() {
+                            }).then(function() {
                                 location.reload();
                             });
                         }
