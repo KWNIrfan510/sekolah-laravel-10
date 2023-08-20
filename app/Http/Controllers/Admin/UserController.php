@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -34,7 +35,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::latest()->get();
+        return view('admin.user.create', compact('roles'));
     }
 
     /**
@@ -42,7 +44,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validating Request
+        $this->validate($request, [
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users',
+            'password' => 'required|confirmed'
+        ]);
+
+        // Inserting request to Database
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password'))
+        ]);
+
+        // Assign Role to User
+        $user->assignRole($request->input('role'));
+
+        if($user) {
+            // redirect dengan pesan sukses
+            return redirect()->route('admin.user.index')->with(['success' => 'Data Berhasil Disimpan']);
+        }
+        else {
+            // redirect dengan pesan error
+            return redirect()->route('admin.user.index')->with(['error' => 'Data Gagal Tersimpan']);
+        }
     }
 
     /**
@@ -56,17 +82,50 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $roles = Role::latest()->get();
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        // Validating Request
+        $this->validate($request,[
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id
+        ]);
+
+        $user = User::findOrFail($user->id);
+
+        if($request->input('password') == "") {
+            $user->update([
+                'name' => $request->input('name'),
+                'email' => $request->input('email')
+            ]);
+        }
+        else {
+            $user->update([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => bcrypt($request->input('password'))
+            ]);
+        }
+
+        // Assign Role
+        $user->syncRoles($request->input('role'));
+
+        if($user) {
+            // redirect dengan pesan sukses
+            return redirect()->route('admin.user.index')->with(['success' => 'Data Berhasil Diupdate']);
+        }
+        else {
+            // redirect dengan pesan error
+            return redirect()->route('admin.user.index')->with(['error' => 'Data Gagal Terupdate']);
+        }
     }
 
     /**
@@ -74,6 +133,18 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        if($user){
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
     }
 }
