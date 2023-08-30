@@ -41,6 +41,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($users as $no => $user)
+                                <tr>
                                     <th scope="row" style="text-align: center">{{ ++$no + ($users->currentPage() -1) * $users->perPage() }}</th>
                                     <td>{{ $user->name }}</td>
                                     <td>
@@ -60,6 +61,7 @@
                                             </button>
                                         @endcan
                                     </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
