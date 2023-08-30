@@ -152,6 +152,5 @@ class UserController extends Controller
                 'status' => 'error'
             ]);
         }
-
     }
 }
