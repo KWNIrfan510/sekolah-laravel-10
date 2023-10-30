@@ -37,3 +37,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('/user', App\Http\Controllers\Admin\UserController::class, ['except' => ['show'], 'as' => 'admin']);
     });
 });
+
+Route::get('/test', function () {
+    return "test";
+});
