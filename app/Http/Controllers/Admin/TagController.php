@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Tag;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -35,7 +36,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('admim.tag.create');
+        return view('admin.tag.create');
     }
 
     /**
@@ -85,7 +86,7 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        $this->validate([
+        $this->validate($request, [
             'name' => 'required|unique:tags,name,'.$tag->id
         ]);
 
