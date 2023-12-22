@@ -24,7 +24,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::latest()->when(request()->q, function($args) {
+        $tags = Tag::latest()->when(request()->q, function($tags) {
             $tags = $tags->where('name', 'like', '%'. request()->q. '%');
         })->paginate(10);
 
