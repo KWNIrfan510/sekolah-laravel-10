@@ -49,7 +49,7 @@
                                             @endcan
 
                                             @can('categories.delete')
-                                            <button onclick="Delete(this.id)" class="btn btn-sm btn-primary" id="{{ $category->id }}">
+                                            <button onclick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $category->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                             @endcan
