@@ -41,6 +41,9 @@ Route::prefix('admin')->group(function () {
 
         // Category
         Route::resource('/category', App\Http\Controllers\Admin\CategoryController::class, ['except' => ['show'], 'as' => 'admin']);
+
+        // Post
+        Route::resource('/post', App\Http\Controllers\Admin\PostController::class, ['except' => ['show'], 'as' => 'admin']);
     });
 });
 
