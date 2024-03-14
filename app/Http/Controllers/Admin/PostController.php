@@ -102,7 +102,7 @@ class PostController extends Controller
     {
         $tags = Tag::latest()->get();
         $categories = Category::latest()->get();
-        return view('admin.post.create', compact('post','tags','categories'));
+        return view('admin.post.edit', compact('post','tags','categories'));
     }
 
     /**
@@ -116,11 +116,7 @@ class PostController extends Controller
             'category_id' => 'required',
             'content' => 'required',
         ]);
-
-        // Upload Image
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
-
+        
         if($request->file('image') == '')
         {
             $post = Post::findOrFail($post->id);
