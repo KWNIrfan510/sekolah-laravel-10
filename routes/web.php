@@ -23,12 +23,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['register' => false]);
 
 Route::prefix('admin')->group(function () {
-    Route::group(['middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'auth'], function () {
         // Dashboard
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard.index');
-        
+
         // Permissions
-        Route::resource('/permission', App\Http\Controllers\Admin\PermissionController::class, ['except' => ['show','create','edit','update','delete'], 'as' => 'Admin']);
+        Route::resource('/permission', App\Http\Controllers\Admin\PermissionController::class, ['except' => ['show', 'create', 'edit', 'update', 'delete'], 'as' => 'Admin']);
 
         // Roles
         Route::resource('/role', App\Http\Controllers\Admin\RoleController::class, ['except' => ['show'], 'as' => 'admin']);
@@ -44,6 +44,9 @@ Route::prefix('admin')->group(function () {
 
         // Post
         Route::resource('/post', App\Http\Controllers\Admin\PostController::class, ['except' => ['show'], 'as' => 'admin']);
+
+        // Event
+        Route::resource('/event', App\Http\Controllers\Admin\EventController::class, ['except' => ['show'], 'as' => 'admin']);
     });
 });
 
