@@ -47,6 +47,9 @@ Route::prefix('admin')->group(function () {
 
         // Event
         Route::resource('/event', App\Http\Controllers\Admin\EventController::class, ['except' => ['show'], 'as' => 'admin']);
+
+        // Photo
+        Route::resource('/photo', App\Http\Controllers\Admin\PhotoController::class, ['except' => ['show', 'create', 'edit', 'update'], 'as' => 'admin']);
     });
 });
 
