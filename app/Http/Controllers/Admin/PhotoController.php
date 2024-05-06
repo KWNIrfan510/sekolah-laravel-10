@@ -47,7 +47,7 @@ class PhotoController extends Controller
 
         $photo = Photo::create([
             'image' => $image->hashName(),
-            'captipn' => $request->input('caption')
+            'caption' => $request->input('caption')
         ]);
 
         if ($photo) {
